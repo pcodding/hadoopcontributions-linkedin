@@ -126,8 +126,14 @@ public class EmployerResolver {
 													company, matcher.group(1));
 											// If we have an close match on
 											// employer, mark it is POSITIVE
-											if (matcher.group(1).contains(
-													company)
+											if (matcher
+													.group(1)
+													.toLowerCase()
+													.contains(
+															company.toLowerCase()
+																	.replace(
+																			"!",
+																			"\\!"))
 													|| editDistance < 5)
 												output.write("Search for name: '"
 														+ name
@@ -151,6 +157,17 @@ public class EmployerResolver {
 										 * "at (Employer)", we can only provide
 										 * a WEAK association
 										 */
+									} else if (person
+											.getHeadline()
+											.toLowerCase()
+											.contains(
+													company.toLowerCase())) {
+										output.write("Search for name: '"
+												+ name
+												+ "' with expected employer '"
+												+ company
+												+ "' returned 1 result with a POSITIVE match on current employer:"
+												+ company + "\n");
 									} else
 										output.write("Search for name: '"
 												+ name
